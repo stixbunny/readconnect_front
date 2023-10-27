@@ -1,56 +1,67 @@
-export default async function fetchBooks() {
-  const api = process.env.GRAPHQL_API;
+export default async function fetchBooks(props) {
+  let afterCursor = '';
+  if (props) {
+    afterCursor = `, after: "${props}"`;
+  } else {
+    afterCursor = '';
+  }
+  // console.log('afterCursor is finally: ' + afterCursor);
+  const api = process.env.NEXT_PUBLIC_GRAPHQL_API;
+  const body = JSON.stringify({
+    query: `query AllBooks {
+      allBooks(first: 20) {
+        edges {
+            node {
+                publishedDate
+                id
+                title
+                img
+                shortDescription
+                authors {
+                    edges {
+                        node {
+                            id
+                            name
+                        }
+                    }
+                }
+                categories {
+                    edges {
+                        node {
+                            id
+                            name
+                        }
+                    }
+                }
+            }
+            cursor
+        }
+        pageInfo {
+            hasNextPage
+            hasPreviousPage
+            endCursor
+        }
+      }
+    }`,
+  });
   const response = await fetch(api, {
     method: 'post',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({
-      query: `query AllBooks {
-        allBooks(first: 20) {
-          edges {
-              node {
-                  publishedDate
-                  id
-                  title
-                  img
-                  shortDescription
-                  authors {
-                      edges {
-                          node {
-                              id
-                              name
-                          }
-                      }
-                  }
-                  categories {
-                      edges {
-                          node {
-                              id
-                              name
-                          }
-                      }
-                  }
-              }
-              cursor
-          }
-          pageInfo {
-              hasNextPage
-              hasPreviousPage
-              endCursor
-          }
-      }
-      }`,
-    }),
+    body: body,
     cache: 'no-store',
   });
+  console.log('api address was: ' + api);
+  // console.log('body sent was:');
+  // console.log(body);
   const json = await response.json();
-  const books = json.data.allBooks;
-  const hasNextPage = books.pageInfo.hasNextPage;
-  const hasPreviousPage = books.pageInfo.hasPreviousPage;
-  const endCursor = books.pageInfo.endCursor;
-  let totalBooks = [];
-  for (const thing of books.edges) {
+  const queryBooks = json.data.allBooks;
+  const hasNextPage = queryBooks.pageInfo.hasNextPage;
+  const hasPreviousPage = queryBooks.pageInfo.hasPreviousPage;
+  const endCursor = queryBooks.pageInfo.endCursor;
+  let books = [];
+  for (const thing of queryBooks.edges) {
     const authors = [];
     const categories = [];
     for (const node of thing.node.authors.edges) {
@@ -61,8 +72,8 @@ export default async function fetchBooks() {
     }
     thing.node.authors = authors;
     thing.node.categories = categories;
-    totalBooks.push(thing.node);
+    books.push(thing.node);
   }
 
-  return totalBooks, hasNextPage, hasPreviousPage, endCursor;
+  return { books, hasNextPage, hasPreviousPage, endCursor };
 }
