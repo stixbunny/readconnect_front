@@ -16,8 +16,9 @@ module.exports = {
         screen: ['100vh /* fallback for Opera, IE and etc. */', '100dvh'],
       },
       fontFamily: {
-        title: ["Merriweather", "Georgia", "Times New Roman", "serif"]
-      }
+        lato: ['var(--font-lato)'],
+        merriweather: ['var(--font-merriweather)'],
+      },
     },
   },
   plugins: [],

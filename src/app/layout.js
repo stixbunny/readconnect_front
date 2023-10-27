@@ -1,7 +1,20 @@
-import { Inter } from 'next/font/google';
 import './globals.css';
 import Navbar from './components/navbar';
-// const inter = Inter({ subsets: ['latin'] });
+import { Merriweather, Lato } from 'next/font/google';
+
+const merriweather = Merriweather({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-merriweather',
+  weight: ['400', '700'],
+});
+
+const lato = Lato({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-lato',
+  weight: ['100', '300', '400', '700'],
+});
 
 export const metadata = {
   title: 'Create Next App',
@@ -10,8 +23,8 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body>
+    <html lang="en" className={`${merriweather.variable} ${lato.variable}`}>
+      <body className="font-lato">
         <div className="flex min-h-screen flex-col">
           <header>
             <Navbar />
