@@ -5,11 +5,10 @@ export default async function fetchBooks(props) {
   } else {
     afterCursor = '';
   }
-  // console.log('afterCursor is finally: ' + afterCursor);
   const api = process.env.NEXT_PUBLIC_GRAPHQL_API;
   const body = JSON.stringify({
     query: `query AllBooks {
-      allBooks(first: 20) {
+      allBooks(first: 20${afterCursor}) {
         edges {
             node {
                 publishedDate
