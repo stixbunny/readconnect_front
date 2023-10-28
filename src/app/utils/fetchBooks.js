@@ -1,14 +1,20 @@
-export default async function fetchBooks(props) {
-  let afterCursor = '';
-  if (props) {
-    afterCursor = `, after: "${props}"`;
+export default async function fetchBooks(afterCursor = '', first = 20) {
+  if (afterCursor.length > 0) {
+    afterCursor = `, after: "${afterCursor}"`;
+  }
+  if (first > 100) {
+    first = '';
   } else {
-    afterCursor = '';
+    first = `first: ${first}`;
+  }
+  let params = "";
+  if(afterCursor != "" || first != 0) {
+    params = `(${first}${afterCursor})`
   }
   const api = process.env.NEXT_PUBLIC_GRAPHQL_API;
   const body = JSON.stringify({
     query: `query AllBooks {
-      allBooks(first: 20${afterCursor}) {
+      allBooks${params} {
         edges {
             node {
                 publishedDate
@@ -51,9 +57,6 @@ export default async function fetchBooks(props) {
     body: body,
     cache: 'no-store',
   });
-  console.log('api address was: ' + api);
-  // console.log('body sent was:');
-  // console.log(body);
   const json = await response.json();
   const queryBooks = json.data.allBooks;
   const hasNextPage = queryBooks.pageInfo.hasNextPage;

@@ -6,7 +6,6 @@ import MoreBooks from '../components/moreBooks';
 
 export default async function Books() {
   const { books, hasNextPage, hasPrevPage, endCursor } = await fetchBooks();
-  console.log('fetchBooks in /books run');
 
   return (
     <>
