@@ -1,36 +1,18 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# ReadConnect Front
 
-## Getting Started
+¡Hola! Este es el frontend del proyecto ReadConnect. Esta desarrollado en Next.js. Esta alojado en Amplify de Amazon, pero se puede servir localmente con el .env que se haya en el repositorio.
 
-First, run the development server:
+## El proyecto
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+La única página funcional del proyecto es [/books](https://github.com/stixbunny/readconnect_front/blob/master/src/app/books/page.jsx) la cual carga todos los libros desde el backend. Al ser GraphQl, de páginación hay un botón al final para cargar mas libros. Si bien la api soporta filtración por casi todos los campos, no esta incluido aquí.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Para correr el proyecto de forma local
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+Hay que seguir los pasos para la mayoria de los proyectos en node:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- Instalar las dependencias con `npm install`
+- Correr el entorno de desarrollo con `npm run dev`
 
-## Learn More
+## Finalmente
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+La app se encuentra en https://master.d3uni35qh1dii9.amplifyapp.com/books pero como se mencionó no funciona correctamente debido a que el backend esta en http y no https.
